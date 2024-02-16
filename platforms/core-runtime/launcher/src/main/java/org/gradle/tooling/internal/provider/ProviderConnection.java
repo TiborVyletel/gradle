@@ -39,7 +39,6 @@ import org.gradle.internal.jvm.Jvm;
 import org.gradle.internal.jvm.inspection.JvmVersionDetector;
 import org.gradle.internal.logging.LoggingManagerInternal;
 import org.gradle.internal.logging.console.DefaultUserInput;
-import org.gradle.internal.logging.console.UserInput;
 import org.gradle.internal.logging.events.OutputEventListener;
 import org.gradle.internal.logging.services.LoggingServiceRegistry;
 import org.gradle.internal.service.ServiceRegistry;
@@ -302,12 +301,6 @@ public class ProviderConnection {
                         }
                     }, userInput, new DefaultExecutorFactory());
                     inputForwarder.start();
-                    userInput.delegateTo(new UserInput() {
-                        @Override
-                        public void forwardResponse() {
-                            userInputReader.putInput(UserInputReader.END_OF_INPUT);
-                        }
-                    });
                     try {
                         return embeddedExecutor.execute(action, actionParameters, buildRequestContext);
                     } finally {
